@@ -163,18 +163,20 @@ class ofApp : public ofBaseApp{
     //--------------------------------------------------------------
     void draw() {
 		updateFBO();
-		video.draw(0, 0);
-		
 		drawFBO();
-		texture_tile.draw(0, camHeight, camWidth, camHeight);
-
 		drawDestImage();
 
-		dest_image.draw(camWidth, camHeight, camWidth, camHeight);
-		mapImage.draw(camWidth, 0, camWidth, camHeight);
         if(mode == AppMode_Debug) {
+			//video.draw(0, 0);
+			(*caches.begin())->draw(0, 0);
+			mapImage.draw(camWidth, 0, camWidth, camHeight);
+			texture_tile.draw(0, camHeight, camWidth, camHeight);
+			dest_image.draw(camWidth, camHeight, camWidth, camHeight);
             drawDebug();
-        }
+		} else {
+			dest_image.draw(0, 0, ofGetWidth(), ofGetWidth()/camWidth*camHeight);
+
+		}
     }
 	void drawDestImage() {
 
@@ -199,7 +201,11 @@ class ofApp : public ofBaseApp{
 		if (caches.size() > 0) {
 			ofFbo * fbo = caches.back();
 			fbo->begin();
+			ofPushMatrix();
+			ofTranslate(camWidth, 0);
+			ofScale(-1, 1);
 			video.draw(0, 0, fbo->getWidth(), fbo->getHeight());
+			ofPopMatrix();
 			fbo->end();
 			caches.insert(caches.begin(), fbo);
 			caches.pop_back();
@@ -213,13 +219,6 @@ class ofApp : public ofBaseApp{
 		auto it = caches.begin();
 		while (it != caches.end()) {
 			(*it)->draw(x, y, (*it)->getWidth(), (*it)->getHeight());
-			/*
-			ofSetColor((float)x/ texture_tile.getWidth()*255, (float)y/ texture_tile.getHeight() * 255, 0);
-			ofDrawRectangle(x, y, camWidth/2, 50);
-			ofSetColor(0, 0, (float)(y/camHeight*7+x/camWidth)/video_num*255);
-			ofDrawRectangle(x+ camWidth / 2, y, camWidth / 2, 50);
-			ofSetColor(255);
-			//*/
 			x += (*it)->getWidth();
 			if (x >= texture_tile.getWidth()) {
 				x = 0;
