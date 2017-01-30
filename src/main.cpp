@@ -103,17 +103,17 @@ class ofApp : public ofBaseApp{
         gui.loadFromFile("settings.xml");
     }
 	//--------------------------------------------------------------
-	void ofApp::setModeNoise(bool &value) {
+	void setModeNoise(bool &value) {
 		if (!value) return;
 		mode_vertical = false;
 		mode_horizontal = false;
 	}
-	void ofApp::setModeVertical(bool &value) {
+	void setModeVertical(bool &value) {
 		if (!value) return;
 		mode_noise = false;
 		mode_horizontal = false;
 	}
-	void ofApp::setModeHorizontal(bool &value) {
+	void setModeHorizontal(bool &value) {
 		if (!value) return;
 		mode_vertical = false;
 		mode_noise = false;

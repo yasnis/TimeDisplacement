@@ -18,3 +18,5 @@ bin/freetype.dll
 bin/glut32.dll
 bin/libeay32.dll
 bin/ssleay32.dll
+bin/TimeDisplacement.app
+Breakpoints_v2.xcbkptlist
